@@ -1,9 +1,8 @@
 use crate::components::ui::icons::link_icon;
 use crate::config::constants::HEADER_LINKS;
-use leptos::ev;
+use crate::hooks::use_click_outside::use_click_outside;
 use leptos::prelude::*;
 use leptos_router::hooks::{use_location, use_navigate};
-use wasm_bindgen::JsCast;
 
 #[component]
 pub fn MobileNav(
@@ -14,24 +13,14 @@ pub fn MobileNav(
     let pathname = use_location().pathname;
     let navigate = use_navigate();
 
-    window_event_listener(ev::mousedown, move |ev| {
-        if !is_open.get_untracked() {
-            return;
-        }
-        let Some(target) = ev.target() else {
-            return;
-        };
-        let target_node = target.dyn_into::<web_sys::Node>().ok();
-        let inside_nav = nav_ref
-            .get()
-            .is_some_and(|el| el.contains(target_node.as_ref()));
-        let inside_button = button_ref
-            .get()
-            .is_some_and(|el| el.contains(target_node.as_ref()));
-        if !inside_nav && !inside_button {
-            is_open.set(false);
-        }
-    });
+    use_click_outside(
+        is_open,
+        move |target| {
+            nav_ref.get().is_some_and(|el| el.contains(target))
+                || button_ref.get().is_some_and(|el| el.contains(target))
+        },
+        move || is_open.set(false),
+    );
 
     view! {
         {move || {

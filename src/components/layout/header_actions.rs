@@ -3,6 +3,7 @@ use crate::components::ui::icons::{
 };
 use crate::config::themes::THEMES;
 use crate::core::theme::ThemeState;
+use crate::hooks::use_click_outside::use_click_outside;
 use leptos::prelude::*;
 
 #[component]
@@ -10,6 +11,16 @@ pub fn HeaderActions() -> impl IntoView {
     let theme = ThemeState::use_theme().expect("ThemeState not provided at app root");
     let (is_open, set_is_open) = signal(false);
     let (show_custom, set_show_custom) = signal(false);
+    let color_ref: NodeRef<leptos::html::Div> = NodeRef::new();
+
+    use_click_outside(
+        is_open,
+        move |target| color_ref.get().is_some_and(|el| el.contains(target)),
+        move || {
+            set_is_open.set(false);
+            set_show_custom.set(false);
+        },
+    );
 
     let close_panel = move |_| {
         set_is_open.set(false);
@@ -44,7 +55,7 @@ pub fn HeaderActions() -> impl IntoView {
                 }}
             </button>
 
-            <div class="relative">
+            <div class="relative" node_ref=color_ref>
                 <button
                     on:click=move |_| set_is_open.update(|v| *v = !*v)
                     class="flex size-9 shrink-0 cursor-pointer items-center justify-center rounded-md text-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
@@ -57,7 +68,6 @@ pub fn HeaderActions() -> impl IntoView {
                 {move || {
                     if is_open.get() {
                         view! {
-                            <div class="fixed inset-0 z-40" on:click=close_panel></div>
                             <div class="absolute right-0 top-full z-50 mt-2 w-64 rounded-lg border border-border bg-background p-3 shadow-lg">
                                 <div class="mb-3 flex items-center justify-between">
                                     <span class="text-sm font-medium text-foreground">
