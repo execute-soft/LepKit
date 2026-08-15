@@ -1,3 +1,4 @@
+use crate::utils::class::merge_classes;
 use leptos::prelude::*;
 use wasm_bindgen::closure::Closure;
 use wasm_bindgen::JsCast;
@@ -75,7 +76,7 @@ pub fn Section(
         <section
             id=id
             node_ref=node_ref
-            class=format!("{class_name} mx-auto relative overflow-hidden sm:overflow-visible")
+            class=merge_classes(&[class_name, "mx-auto relative overflow-hidden sm:overflow-visible"])
             style=style
         >
             {children()}

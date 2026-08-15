@@ -1,3 +1,4 @@
+use crate::utils::class::merge_classes;
 use leptos::prelude::*;
 use leptos_router::hooks::use_navigate;
 
@@ -19,11 +20,8 @@ pub fn NavLink(
 ) -> impl IntoView {
     let navigate = use_navigate();
     let class = move || {
-        if active.get() {
-            format!("{class} {active_class}")
-        } else {
-            format!("{class} {inactive_class}")
-        }
+        let state_class = if active.get() { active_class } else { inactive_class };
+        merge_classes(&[class, state_class])
     };
 
     view! {

@@ -1,25 +1,10 @@
+use crate::components::ui::badge::Badge;
 use crate::components::ui::icons::{
     icon_activity, icon_arrow_right, icon_box, icon_check_circle, icon_clock, icon_download,
     icon_rocket, icon_shield_check, icon_target, icon_terminal,
 };
 use leptos::prelude::*;
 use leptos_router::hooks::use_navigate;
-
-#[component]
-fn Badge() -> impl IntoView {
-    view! {
-        <div class="relative mx-auto mb-6 w-fit">
-            <div class="absolute inset-0 rounded-full bg-primary/20 blur-sm"></div>
-            <div class="relative flex items-center gap-2 rounded-full border border-border bg-background/80 px-4 py-1.5 text-xs sm:text-sm text-muted-foreground">
-                <span class="relative flex size-2">
-                    <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75"></span>
-                    <span class="relative inline-flex size-2 rounded-full bg-primary"></span>
-                </span>
-                "Manage your entire device fleet from one place"
-            </div>
-        </div>
-    }
-}
 
 #[component]
 fn HeroButtons() -> impl IntoView {
@@ -138,7 +123,7 @@ pub fn Home() -> impl IntoView {
     view! {
         <main class="relative flex-1">
             <div class="relative mx-auto max-w-7xl px-4 py-16 text-center sm:px-6 md:py-24 lg:px-8">
-                <Badge />
+                <Badge text="Manage your entire device fleet from one place" />
 
                 <h1 class="mx-auto max-w-3xl text-4xl font-bold tracking-tight text-foreground md:text-6xl">
                     "Control every device with "
