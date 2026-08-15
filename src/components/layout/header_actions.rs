@@ -7,7 +7,7 @@ use leptos::prelude::*;
 
 #[component]
 pub fn HeaderActions() -> impl IntoView {
-    let theme = ThemeState::new();
+    let theme = ThemeState::use_theme().expect("ThemeState not provided at app root");
     let (is_open, set_is_open) = signal(false);
     let (show_custom, set_show_custom) = signal(false);
 

@@ -38,6 +38,19 @@ impl ThemeState {
         }
     }
 
+    /// Creates the theme state and provides it to the whole app via context.
+    /// Call once at the app root so every page reads the same instance.
+    pub fn provide_theme() -> Self {
+        let theme = ThemeState::new();
+        provide_context(theme);
+        theme
+    }
+
+    /// Reads the global theme state provided at the app root.
+    pub fn use_theme() -> Option<Self> {
+        use_context::<ThemeState>()
+    }
+
     pub fn is_dark(self) -> bool {
         self.mode.get() == "dark"
     }

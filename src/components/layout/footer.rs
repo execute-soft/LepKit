@@ -14,7 +14,7 @@ pub fn Footer() -> impl IntoView {
 
     view! {
         <Section id="footer" animate=true delay=0.2>
-            <footer class="border-t border-border bg-card/10">
+            <footer class="relative z-10 border-t border-border bg-card/10">
                 <div class="grid gap-10 px-4 py-12 sm:px-6 lg:px-8 md:grid-cols-2 lg:grid-cols-4">
                     <div class="space-y-4">
                         <Logo size=40 class="justify-start" />

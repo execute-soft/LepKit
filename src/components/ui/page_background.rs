@@ -7,13 +7,15 @@ const BAND: &str =
 /// Full-page background color effect.
 ///
 /// Renders the learnsquads decorative blob bands (theme-aware `--blob1/2/3`
-/// ellipses) down the whole page from top to bottom, including a band behind
-/// the footer so the effect shows through its translucent background.
+/// ellipses) as a `fixed` layer that always covers the entire window, top to
+/// bottom, regardless of scroll position. The bottom band sits behind the
+/// footer (which is raised above the background), so the effect shows through
+/// the footer's translucent background.
 #[component]
 pub fn PageBackground() -> impl IntoView {
     view! {
         <div
-            class="pointer-events-none absolute inset-0 z-0 overflow-hidden"
+            class="pointer-events-none fixed inset-0 z-0 overflow-hidden"
             aria-hidden="true"
         >
             <BlobSvg class=format!("{BAND} top-0") />
