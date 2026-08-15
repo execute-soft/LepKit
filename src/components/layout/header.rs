@@ -46,14 +46,12 @@ pub fn Header() -> impl IntoView {
     view! {
         <div class="motion-top">
             <header
-                class={move || {
-                    let visible = if is_visible.get() {
-                        "translate-y-0 opacity-100"
-                    } else {
-                        "-translate-y-full opacity-0 pointer-events-none"
-                    };
-                    format!("fixed inset-x-0 top-4 z-40 mx-auto flex h-15 max-w-5xl items-center justify-between rounded-2xl bg-background/10 px-4 sm:px-8 shadow-xs saturate-100 backdrop-blur-[10px] transition-all duration-300 ease-in-out {visible}")
-                }}
+                class="fixed inset-x-0 top-4 z-40 mx-auto flex h-15 max-w-5xl items-center justify-between rounded-2xl bg-background/10 px-4 sm:px-8 shadow-xs saturate-100 backdrop-blur-[10px] transition-all duration-300 ease-in-out"
+                class:translate-y-0=move || is_visible.get()
+                class:opacity-100=move || is_visible.get()
+                class:-translate-y-full=move || !is_visible.get()
+                class:opacity-0=move || !is_visible.get()
+                class:pointer-events-none=move || !is_visible.get()
             >
                 <a
                     href="/"
@@ -81,16 +79,10 @@ pub fn Header() -> impl IntoView {
                                                     ev.prevent_default();
                                                     navigate(href, Default::default());
                                                 }
-                                                class={move || {
-                                                    format!(
-                                                        "rounded-sm px-3 py-2 text-sm font-medium transition-colors capitalize {}",
-                                                        if is_active(href) {
-                                                            "text-foreground"
-                                                        } else {
-                                                            "text-muted-foreground hover:text-foreground"
-                                                        },
-                                                    )
-                                                }}
+                                                class="rounded-sm px-3 py-2 text-sm font-medium transition-colors capitalize"
+                                                class:text-foreground=move || is_active(href)
+                                                class:text-muted-foreground=move || !is_active(href)
+                                                class:hover:text-foreground=move || !is_active(href)
                                             >
                                                 {label}
                                             </a>

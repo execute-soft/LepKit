@@ -752,6 +752,8 @@ dependencies = [
  "leptos",
  "leptos_router",
  "log",
+ "serde",
+ "serde_json",
  "wasm-bindgen",
  "web-sys",
 ]

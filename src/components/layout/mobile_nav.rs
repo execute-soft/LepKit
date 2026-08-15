@@ -63,16 +63,11 @@ pub fn MobileNav(
                                                         navigate(href, Default::default());
                                                         is_open.set(false);
                                                     }
-                                                    class={move || {
-                                                        format!(
-                                                            "relative flex w-full cursor-pointer items-center gap-3 rounded-sm px-2 py-1.5 text-xs transition-colors capitalize sm:gap-4 sm:text-sm {}",
-                                                            if is_active() {
-                                                                "bg-primary/10 text-primary"
-                                                            } else {
-                                                                "text-foreground hover:bg-foreground/30"
-                                                            },
-                                                        )
-                                                    }}
+                                                    class="relative flex w-full cursor-pointer items-center gap-3 rounded-sm px-2 py-1.5 text-xs transition-colors capitalize sm:gap-4 sm:text-sm"
+                                                    class:text-primary=move || is_active()
+                                                    class=(["bg-primary/10"], move || is_active())
+                                                    class:text-foreground=move || !is_active()
+                                                    class=(["hover:bg-foreground/30"], move || !is_active())
                                                 >
                                                     {link_icon(icon_key, "size-3.5")}
                                                     <span>{label}</span>
