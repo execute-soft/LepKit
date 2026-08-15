@@ -1,8 +1,10 @@
 use crate::components::ui::icons::link_icon;
+use crate::components::ui::link::NavLink;
 use crate::config::constants::HEADER_LINKS;
 use crate::hooks::use_click_outside::use_click_outside;
+use crate::utils::route::route_is_active;
 use leptos::prelude::*;
-use leptos_router::hooks::{use_location, use_navigate};
+use leptos_router::hooks::use_location;
 
 #[component]
 pub fn MobileNav(
@@ -11,7 +13,6 @@ pub fn MobileNav(
 ) -> impl IntoView {
     let nav_ref: NodeRef<leptos::html::Div> = NodeRef::new();
     let pathname = use_location().pathname;
-    let navigate = use_navigate();
 
     use_click_outside(
         is_open,
@@ -35,32 +36,19 @@ pub fn MobileNav(
                                         let href = *href;
                                         let label = *label;
                                         let icon_key = *icon_key;
-                                        let navigate = navigate.clone();
-                                        let is_active = move || {
-                                            if href == "/" {
-                                                pathname.get() == "/"
-                                            } else {
-                                                pathname.get().starts_with(href)
-                                            }
-                                        };
                                         view! {
                                             <li>
-                                                <a
+                                                <NavLink
                                                     href=href
-                                                    on:click=move |ev| {
-                                                        ev.prevent_default();
-                                                        navigate(href, Default::default());
-                                                        is_open.set(false);
-                                                    }
+                                                    active=move || route_is_active(&pathname.get(), href)
+                                                    on_click=Callback::new(move |_: ()| is_open.set(false))
                                                     class="relative flex w-full cursor-pointer items-center gap-3 rounded-sm px-2 py-1.5 text-xs transition-colors capitalize sm:gap-4 sm:text-sm"
-                                                    class:text-primary=move || is_active()
-                                                    class=(["bg-primary/10"], move || is_active())
-                                                    class:text-foreground=move || !is_active()
-                                                    class=(["hover:bg-foreground/30"], move || !is_active())
+                                                    active_class="text-primary bg-primary/10"
+                                                    inactive_class="text-foreground hover:bg-foreground/30"
                                                 >
                                                     {link_icon(icon_key, "size-3.5")}
                                                     <span>{label}</span>
-                                                </a>
+                                                </NavLink>
                                             </li>
                                         }
                                     })

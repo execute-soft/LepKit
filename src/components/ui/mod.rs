@@ -3,6 +3,7 @@ pub mod button;
 pub mod decorative_blob;
 pub mod icons;
 pub mod input;
+pub mod link;
 pub mod logo;
 pub mod modal;
 pub mod page_background;

@@ -1,8 +1,10 @@
 use crate::components::layout::header_actions::HeaderActions;
 use crate::components::layout::mobile_nav::MobileNav;
 use crate::components::ui::icons::{icon_menu, icon_x};
+use crate::components::ui::link::NavLink;
 use crate::components::ui::logo::Logo;
 use crate::config::constants::HEADER_LINKS;
+use crate::utils::route::route_is_active;
 use leptos::ev;
 use leptos::prelude::*;
 use leptos_router::hooks::{use_location, use_navigate};
@@ -15,10 +17,9 @@ pub fn Header() -> impl IntoView {
     let button_ref: NodeRef<leptos::html::Button> = NodeRef::new();
 
     let pathname = use_location().pathname;
-    let navigate = use_navigate();
 
     let go_home = {
-        let navigate = navigate.clone();
+        let navigate = use_navigate();
         move |ev: ev::MouseEvent| {
             ev.prevent_default();
             navigate("/", Default::default());
@@ -34,14 +35,6 @@ pub fn Header() -> impl IntoView {
         }
         last_scroll_y.set_value(current);
     });
-
-    let is_active = move |href: &'static str| {
-        if href == "/" {
-            pathname.get() == "/"
-        } else {
-            pathname.get().starts_with(href)
-        }
-    };
 
     view! {
         <div class="motion-top">
@@ -70,22 +63,17 @@ pub fn Header() -> impl IntoView {
                                 .map(|(href, label, _)| {
                                     let href = *href;
                                     let label = *label;
-                                    let navigate = navigate.clone();
                                     view! {
                                         <li class="relative flex items-center justify-center">
-                                            <a
+                                            <NavLink
                                                 href=href
-                                                on:click=move |ev| {
-                                                    ev.prevent_default();
-                                                    navigate(href, Default::default());
-                                                }
+                                                active=move || route_is_active(&pathname.get(), href)
                                                 class="rounded-sm px-3 py-2 text-sm font-medium transition-colors capitalize"
-                                                class:text-foreground=move || is_active(href)
-                                                class:text-muted-foreground=move || !is_active(href)
-                                                class:hover:text-foreground=move || !is_active(href)
+                                                active_class="text-foreground"
+                                                inactive_class="text-muted-foreground hover:text-foreground"
                                             >
                                                 {label}
-                                            </a>
+                                            </NavLink>
                                         </li>
                                     }
                                 })

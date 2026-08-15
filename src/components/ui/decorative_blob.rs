@@ -1,5 +1,3 @@
-#![allow(dead_code)]
-
 use leptos::prelude::*;
 use std::sync::atomic::{AtomicU64, Ordering};
 
@@ -104,27 +102,5 @@ pub fn BlobSvg(#[prop(into)] class: String) -> impl IntoView {
         >
             <BlobGroup id=unique_id() />
         </svg>
-    }
-}
-
-#[component]
-pub fn DecorativeBlobTop(#[prop(optional)] class: &'static str) -> impl IntoView {
-    view! {
-        <BlobSvg
-            class=format!(
-                "absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[500px] sm:max-w-[400px] md:max-w-[600px] lg:max-w-[800px] xl:max-w-[1000px] {class}",
-            )
-        />
-    }
-}
-
-#[component]
-pub fn DecorativeBlobBottom(#[prop(optional)] class: &'static str) -> impl IntoView {
-    view! {
-        <BlobSvg
-            class=format!(
-                "w-full max-w-[500px] sm:max-w-[400px] md:max-w-[600px] lg:max-w-[800px] xl:max-w-[1000px] rotate-180 {class}",
-            )
-        />
     }
 }

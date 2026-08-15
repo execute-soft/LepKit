@@ -1,16 +1,44 @@
 use crate::components::ui::icons::{icon_arrow_up_right, icon_mail, icon_map_pin, social_icon};
+use crate::components::ui::link::NavLink;
 use crate::components::ui::logo::Logo;
 use crate::components::ui::section::Section;
 use crate::config::constants::{
     ACCOUNT_LINKS, APP_LOCATION, APP_MAIL, APP_NAME, APP_TAGLINE, EXPLORE_LINKS, SOCIAL_LINKS,
 };
 use leptos::prelude::*;
-use leptos_router::hooks::use_navigate;
+
+#[component]
+fn LinkColumn(title: &'static str, links: &'static [(&'static str, &'static str)]) -> impl IntoView {
+    view! {
+        <div>
+            <h3 class="mb-4 text-sm font-semibold text-foreground">{title}</h3>
+            <ul class="space-y-2.5">
+                {links
+                    .iter()
+                    .map(|(label, href)| {
+                        let label = *label;
+                        let href = *href;
+                        view! {
+                            <li>
+                                <NavLink
+                                    href=href
+                                    active=Signal::stored(false)
+                                    class="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                                >
+                                    {label}
+                                </NavLink>
+                            </li>
+                        }
+                    })
+                    .collect_view()}
+            </ul>
+        </div>
+    }
+}
 
 #[component]
 pub fn Footer() -> impl IntoView {
     let year = js_sys::Date::new_0().get_full_year() as i32;
-    let navigate = use_navigate();
 
     view! {
         <Section id="footer" animate=true delay=0.2>
@@ -48,61 +76,8 @@ pub fn Footer() -> impl IntoView {
                         </div>
                     </div>
 
-                    <div>
-                        <h3 class="mb-4 text-sm font-semibold text-foreground">"Explore"</h3>
-                        <ul class="space-y-2.5">
-                            {EXPLORE_LINKS
-                                .iter()
-                                .map(|(label, href)| {
-                                    let label = *label;
-                                    let href = *href;
-                                    let navigate = navigate.clone();
-                                    view! {
-                                        <li>
-                                            <a
-                                                href=href
-                                                on:click=move |ev| {
-                                                    ev.prevent_default();
-                                                    navigate(href, Default::default());
-                                                }
-                                                class="text-sm text-muted-foreground transition-colors hover:text-foreground"
-                                            >
-                                                {label}
-                                            </a>
-                                        </li>
-                                    }
-                                })
-                                .collect_view()}
-                        </ul>
-                    </div>
-
-                    <div>
-                        <h3 class="mb-4 text-sm font-semibold text-foreground">"Account"</h3>
-                        <ul class="space-y-2.5">
-                            {ACCOUNT_LINKS
-                                .iter()
-                                .map(|(label, href)| {
-                                    let label = *label;
-                                    let href = *href;
-                                    let navigate = navigate.clone();
-                                    view! {
-                                        <li>
-                                            <a
-                                                href=href
-                                                on:click=move |ev| {
-                                                    ev.prevent_default();
-                                                    navigate(href, Default::default());
-                                                }
-                                                class="text-sm text-muted-foreground transition-colors hover:text-foreground"
-                                            >
-                                                {label}
-                                            </a>
-                                        </li>
-                                    }
-                                })
-                                .collect_view()}
-                        </ul>
-                    </div>
+                    <LinkColumn title="Explore" links=EXPLORE_LINKS />
+                    <LinkColumn title="Account" links=ACCOUNT_LINKS />
 
                     <div class="space-y-4">
                         <h3 class="text-sm font-semibold text-foreground">"Get in touch"</h3>

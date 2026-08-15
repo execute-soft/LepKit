@@ -137,13 +137,6 @@ fn TrustItems() -> impl IntoView {
 pub fn Home() -> impl IntoView {
     view! {
         <main class="relative flex-1">
-            // <LightBackgroundEffect />
-
-            // <AuraBackground>
-            <div class="pointer-events-none absolute inset-0 overflow-hidden">
-                <div class="absolute -top-32 left-1/2 h-80 w-2xl -translate-x-1/2 rounded-full bg-primary/10 blur-3xl"></div>
-            </div>
-
             <div class="relative mx-auto max-w-7xl px-4 py-16 text-center sm:px-6 md:py-24 lg:px-8">
                 <Badge />
 
@@ -166,7 +159,6 @@ pub fn Home() -> impl IntoView {
                 <HeroCards />
                 <TrustItems />
             </div>
-        // </AuraBackground>
         </main>
     }
 }
