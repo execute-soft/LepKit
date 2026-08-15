@@ -316,6 +316,9 @@
   .mb-6 {
     margin-bottom: calc(var(--spacing) * 6);
   }
+  .block {
+    display: block;
+  }
   .flex {
     display: flex;
   }
@@ -325,8 +328,14 @@
   .hidden {
     display: none;
   }
+  .inline {
+    display: inline;
+  }
   .inline-flex {
     display: inline-flex;
+  }
+  .table {
+    display: table;
   }
   .size-2 {
     width: calc(var(--spacing) * 2);
