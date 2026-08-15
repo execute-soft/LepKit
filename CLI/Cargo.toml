@@ -2,7 +2,13 @@
 name = "lepkit"
 version = "0.1.0"
 edition = "2024"
-description = "LepKit — scaffold a Leptos app from the leptos-setter template"
+description = "Scaffold a Leptos app from the leptos-setter template"
+license = "MIT"
+repository = "https://github.com/execute-soft/LepKit"
+readme = "README.md"
+keywords = ["leptos", "scaffold", "cli", "template"]
+categories = ["command-line-utilities", "development-tools"]
+rust-version = "1.85"
 
 [[bin]]
 name = "lepkit"

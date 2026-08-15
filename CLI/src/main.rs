@@ -51,11 +51,19 @@ const NAME_TEMPLATE_FILES: &[&str] = &[
     "package-lock.json",
 ];
 
+/// The project template. Prefers the embedded `template/` directory shipped
+/// inside the crate (required for standalone `cargo install lepkit`); falls
+/// back to the repository root it was built in for development.
 fn source_root() -> PathBuf {
-    Path::new(env!("CARGO_MANIFEST_DIR"))
-        .parent()
-        .expect("LepKit CLI has no parent directory")
-        .to_path_buf()
+    let embedded = Path::new(env!("CARGO_MANIFEST_DIR")).join("template");
+    if embedded.join("Cargo.toml").exists() {
+        embedded
+    } else {
+        Path::new(env!("CARGO_MANIFEST_DIR"))
+            .parent()
+            .expect("LepKit CLI has no parent directory")
+            .to_path_buf()
+    }
 }
 
 fn valid_project_name(name: &str) -> Result<(), String> {
@@ -169,7 +177,7 @@ fn main() {
     let source = source_root();
     if !source.join("Cargo.toml").exists() {
         eprintln!(
-            "error: template source not found at {} (LepKit must live inside the leptos-setter repo)",
+            "error: template source not found at {} (no embedded template; build LepKit inside the leptos-setter repo)",
             source.display()
         );
         std::process::exit(1);
