@@ -1,3 +1,5 @@
+#![allow(dead_code)]
+
 use leptos::prelude::*;
 use std::sync::atomic::{AtomicU64, Ordering};
 
@@ -87,16 +89,17 @@ fn BlobGroup(id: String) -> impl IntoView {
     }
 }
 
+/// The learnsquads decorative blob band: an SVG of three blurred ellipses
+/// filled with the theme-aware `--blob1/2/3` colors. Pass positioning classes
+/// via `class` (e.g. `top-0`, `rotate-180`, `max-w-[...]`).
 #[component]
-pub fn DecorativeBlobTop(#[prop(optional)] class: &'static str) -> impl IntoView {
+pub fn BlobSvg(#[prop(into)] class: String) -> impl IntoView {
     view! {
         <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 1440 550"
             preserve-aspect-ratio="xMidYMid meet"
-            class=format!(
-                "absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[500px] sm:max-w-[400px] md:max-w-[600px] lg:max-w-[800px] xl:max-w-[1000px] {class}",
-            )
+            class=class
             aria-hidden="true"
         >
             <BlobGroup id=unique_id() />
@@ -105,18 +108,23 @@ pub fn DecorativeBlobTop(#[prop(optional)] class: &'static str) -> impl IntoView
 }
 
 #[component]
+pub fn DecorativeBlobTop(#[prop(optional)] class: &'static str) -> impl IntoView {
+    view! {
+        <BlobSvg
+            class=format!(
+                "absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[500px] sm:max-w-[400px] md:max-w-[600px] lg:max-w-[800px] xl:max-w-[1000px] {class}",
+            )
+        />
+    }
+}
+
+#[component]
 pub fn DecorativeBlobBottom(#[prop(optional)] class: &'static str) -> impl IntoView {
     view! {
-        <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 1440 550"
-            preserve-aspect-ratio="xMidYMid meet"
+        <BlobSvg
             class=format!(
-                "w-full max-w-125 sm:max-w-100 md:max-w-150 lg:max-w-200 xl:max-w-250 rotate-180 {class}",
+                "w-full max-w-[500px] sm:max-w-[400px] md:max-w-[600px] lg:max-w-[800px] xl:max-w-[1000px] rotate-180 {class}",
             )
-            aria-hidden="true"
-        >
-            <BlobGroup id=unique_id() />
-        </svg>
+        />
     }
 }

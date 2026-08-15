@@ -5,6 +5,7 @@ pub mod icons;
 pub mod input;
 pub mod logo;
 pub mod modal;
+pub mod page_background;
 pub mod pagination;
 pub mod section;
 pub mod select;

@@ -2,7 +2,7 @@ use crate::app::providers::Providers;
 use crate::app::routes::AppRoutes;
 use crate::components::layout::footer::Footer;
 use crate::components::layout::header::Header;
-use crate::components::ui::decorative_blob::{DecorativeBlobBottom, DecorativeBlobTop};
+use crate::components::ui::page_background::PageBackground;
 use leptos::prelude::*;
 use leptos_router::components::Router;
 
@@ -12,15 +12,13 @@ pub fn App() -> impl IntoView {
         <Providers>
             <Router>
                 <div class="relative flex min-h-screen flex-col bg-background text-foreground">
-                    <Header />
+                    <PageBackground />
 
-                    <DecorativeBlobTop />
+                    <Header />
 
                     <main class="relative z-10 flex-1">
                         <AppRoutes />
                     </main>
-
-                    <DecorativeBlobBottom class="absolute bottom-0 left-1/2 -translate-x-1/2 pointer-events-none z-0" />
 
                     <Footer />
                 </div>
