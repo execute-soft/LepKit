@@ -140,34 +140,32 @@ pub fn Home() -> impl IntoView {
             // <LightBackgroundEffect />
 
             // <AuraBackground>
-            <section class="relative overflow-hidden border-b border-border bg-linear-to-b from-primary/6 to-transparent">
-                <div class="pointer-events-none absolute inset-0 overflow-hidden">
-                    <div class="absolute -top-32 left-1/2 h-80 w-2xl -translate-x-1/2 rounded-full bg-primary/10 blur-3xl"></div>
+            <div class="pointer-events-none absolute inset-0 overflow-hidden">
+                <div class="absolute -top-32 left-1/2 h-80 w-2xl -translate-x-1/2 rounded-full bg-primary/10 blur-3xl"></div>
+            </div>
+
+            <div class="relative mx-auto max-w-7xl px-4 py-16 text-center sm:px-6 md:py-24 lg:px-8">
+                <Badge />
+
+                <h1 class="mx-auto max-w-3xl text-4xl font-bold tracking-tight text-foreground md:text-6xl">
+                    "Control every device with "
+                    <span class="bg-linear-to-r from-primary via-violet-600 to-amber-500 bg-clip-text text-transparent">
+                        "precision and confidence"
+                    </span> <br /> "— no matter how big the fleet."
+                </h1>
+
+                <p class="mx-auto mt-6 max-w-2xl text-base text-muted-foreground md:text-lg">
+                    "Set up devices, watch live telemetry, run remote commands and stay on top of
+                    alerts — all from a single, beautiful control panel."
+                </p>
+
+                <div class="mt-8">
+                    <HeroButtons />
                 </div>
 
-                <div class="relative mx-auto max-w-7xl px-4 py-16 text-center sm:px-6 md:py-24 lg:px-8">
-                    <Badge />
-
-                    <h1 class="mx-auto max-w-3xl text-4xl font-bold tracking-tight text-foreground md:text-6xl">
-                        "Control every device with "
-                        <span class="bg-linear-to-r from-primary via-violet-600 to-amber-500 bg-clip-text text-transparent">
-                            "precision and confidence"
-                        </span> <br /> "— no matter how big the fleet."
-                    </h1>
-
-                    <p class="mx-auto mt-6 max-w-2xl text-base text-muted-foreground md:text-lg">
-                        "Set up devices, watch live telemetry, run remote commands and stay on top of
-                        alerts — all from a single, beautiful control panel."
-                    </p>
-
-                    <div class="mt-8">
-                        <HeroButtons />
-                    </div>
-
-                    <HeroCards />
-                    <TrustItems />
-                </div>
-            </section>
+                <HeroCards />
+                <TrustItems />
+            </div>
         // </AuraBackground>
         </main>
     }
