@@ -128,14 +128,18 @@ cargo install lepkit
 
 ### Updating the template
 
-The template lives in `CLI/template/` and is shipped inside the published
-crate. When the project changes, refresh it before releasing:
+The template is maintained in `CLI/template/` and shipped inside the published
+crate as `CLI/template.tar.gz` (a single archive, so cargo packages it — a
+nested `Cargo.toml` would otherwise be excluded as a separate package). When
+the project changes, refresh both before releasing:
 
 ```sh
 rsync -a --delete \
   --exclude '.git' --exclude 'target' --exclude 'dist' --exclude 'node_modules' \
   --exclude 'CLI' --exclude '.opencode' --exclude 'openspec' --exclude 'AGENTS.md' \
   ./ CLI/template/
+
+tar -czf CLI/template.tar.gz -C CLI/template .
 ```
 
 ## License

@@ -32,18 +32,6 @@ struct Args {
     force: bool,
 }
 
-const EXCLUDED_DIRS: &[&str] = &[
-    ".git",
-    "target",
-    "dist",
-    "node_modules",
-    "CLI",
-    ".opencode",
-    "openspec",
-];
-
-const EXCLUDED_FILES: &[&str] = &["AGENTS.md"];
-
 const NAME_TEMPLATE_FILES: &[&str] = &[
     "Cargo.toml",
     "Cargo.lock",
@@ -51,20 +39,10 @@ const NAME_TEMPLATE_FILES: &[&str] = &[
     "package-lock.json",
 ];
 
-/// The project template. Prefers the embedded `template/` directory shipped
-/// inside the crate (required for standalone `cargo install lepkit`); falls
-/// back to the repository root it was built in for development.
-fn source_root() -> PathBuf {
-    let embedded = Path::new(env!("CARGO_MANIFEST_DIR")).join("template");
-    if embedded.join("Cargo.toml").exists() {
-        embedded
-    } else {
-        Path::new(env!("CARGO_MANIFEST_DIR"))
-            .parent()
-            .expect("LepKit CLI has no parent directory")
-            .to_path_buf()
-    }
-}
+/// The full project template, embedded as a gzipped tarball so it survives
+/// standalone `cargo install lepkit` (a nested `Cargo.toml` would otherwise be
+/// auto-excluded from the published crate as a separate package).
+const TEMPLATE_TAR: &[u8] = include_bytes!("../template.tar.gz");
 
 fn valid_project_name(name: &str) -> Result<(), String> {
     if name.is_empty() {
@@ -98,27 +76,12 @@ fn dir_is_empty(dir: &Path) -> bool {
     }
 }
 
-/// Copies `src` into `dst`, skipping tooling/build dirs and rewriting the
-/// project name inside template files.
-fn copy_tree(src: &Path, dst: &Path, name: &str) -> io::Result<()> {
+/// Unpacks the embedded template into `dst`.
+fn extract_template(dst: &Path) -> io::Result<()> {
     fs::create_dir_all(dst)?;
-    for entry in fs::read_dir(src)? {
-        let entry = entry?;
-        let file_name = entry.file_name();
-        let name_str = file_name.to_string_lossy().into_owned();
-        if entry.file_type()?.is_dir() {
-            if EXCLUDED_DIRS.contains(&name_str.as_str()) {
-                continue;
-            }
-            copy_tree(&entry.path(), &dst.join(file_name), name)?;
-        } else {
-            if EXCLUDED_FILES.contains(&name_str.as_str()) {
-                continue;
-            }
-            let bytes = fs::read(entry.path())?;
-            fs::write(dst.join(file_name), transform(&name_str, bytes, name))?;
-        }
-    }
+    let decoder = flate2::read::GzDecoder::new(TEMPLATE_TAR);
+    let mut archive = tar::Archive::new(decoder);
+    archive.unpack(dst)?;
     Ok(())
 }
 
@@ -137,6 +100,18 @@ fn transform(file_name: &str, bytes: Vec<u8>, name: &str) -> Vec<u8> {
     } else {
         bytes
     }
+}
+
+/// Rewrites the project name inside the extracted template files.
+fn rewrite_name(project: &Path, name: &str) -> io::Result<()> {
+    for file in NAME_TEMPLATE_FILES.iter().copied().chain(["index.html"]) {
+        let path = project.join(file);
+        if path.exists() {
+            let bytes = fs::read(&path)?;
+            fs::write(&path, transform(file, bytes, name))?;
+        }
+    }
+    Ok(())
 }
 
 fn run_git(project: &Path, args: &[&str]) -> std::io::Result<std::process::Output> {
@@ -174,16 +149,7 @@ fn main() {
         std::process::exit(1);
     }
 
-    let source = source_root();
-    if !source.join("Cargo.toml").exists() {
-        eprintln!(
-            "error: template source not found at {} (no embedded template; build LepKit inside the leptos-setter repo)",
-            source.display()
-        );
-        std::process::exit(1);
-    }
-
-    let project = Path::new(&args.path).join(&args.project_name);
+    let project = PathBuf::from(&args.path).join(&args.project_name);
 
     if project.exists() && !dir_is_empty(&project) && !args.force {
         eprintln!(
@@ -193,8 +159,13 @@ fn main() {
         std::process::exit(1);
     }
 
-    if let Err(e) = copy_tree(&source, &project, &args.project_name) {
+    if let Err(e) = extract_template(&project) {
         eprintln!("error: failed to create project: {e}");
+        std::process::exit(1);
+    }
+
+    if let Err(e) = rewrite_name(&project, &args.project_name) {
+        eprintln!("error: failed to write project: {e}");
         std::process::exit(1);
     }
 
