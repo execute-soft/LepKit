@@ -8,7 +8,10 @@ use crate::config::constants::{
 use leptos::prelude::*;
 
 #[component]
-fn LinkColumn(title: &'static str, links: &'static [(&'static str, &'static str)]) -> impl IntoView {
+fn LinkColumn(
+    title: &'static str,
+    links: &'static [(&'static str, &'static str)],
+) -> impl IntoView {
     view! {
         <div>
             <h3 class="mb-4 text-sm font-semibold text-foreground">{title}</h3>
@@ -89,12 +92,9 @@ pub fn Footer() -> impl IntoView {
                             {APP_MAIL}
                         </a>
                         <p class="flex items-center gap-2 text-sm text-muted-foreground">
-                            {icon_map_pin("size-4 shrink-0")}
-                            {APP_LOCATION}
+                            {icon_map_pin("size-4 shrink-0")} {APP_LOCATION}
                         </p>
-                        <p class="text-xs text-muted-foreground">
-                            {APP_TAGLINE}
-                        </p>
+                        <p class="text-xs text-muted-foreground">{APP_TAGLINE}</p>
                     </div>
                 </div>
 

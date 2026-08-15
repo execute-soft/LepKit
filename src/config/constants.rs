@@ -6,15 +6,11 @@ pub const APP_TAGLINE: &str = "Device management and monitoring for modern teams
 pub const HEADER_LINKS: &[(&str, &str, &str)] = &[
     ("/", "home", "home"),
     ("/dashboard", "dashboard", "dashboard"),
-    ("/organizations", "organizations", "organizations"),
-    ("/users", "users", "users"),
 ];
 
 pub const EXPLORE_LINKS: &[(&str, &str)] = &[
     ("Home", "/"),
     ("Dashboard", "/dashboard"),
-    ("Organizations", "/organizations"),
-    ("Users", "/users"),
 ];
 
 pub const ACCOUNT_LINKS: &[(&str, &str)] = &[
