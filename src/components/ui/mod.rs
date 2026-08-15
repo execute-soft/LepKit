@@ -1,6 +1,5 @@
 pub mod badge;
 pub mod button;
-pub mod aura_background;
 pub mod decorative_blob;
 pub mod icons;
 pub mod input;

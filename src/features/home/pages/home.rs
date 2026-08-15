@@ -1,9 +1,7 @@
-use crate::components::ui::aura_background::AuraBackground;
 use crate::components::ui::icons::{
     icon_activity, icon_arrow_right, icon_box, icon_check_circle, icon_clock, icon_download,
     icon_rocket, icon_shield_check, icon_target, icon_terminal,
 };
-use crate::features::home::components::light_background_effect::LightBackgroundEffect;
 use leptos::prelude::*;
 use leptos_router::hooks::use_navigate;
 
@@ -44,7 +42,9 @@ fn HeroButtons() -> impl IntoView {
                     class="group inline-flex items-center gap-2 rounded-lg bg-foreground px-5 py-3 text-sm font-semibold text-background shadow-lg transition-all hover:bg-foreground/90 hover:shadow-primary/20"
                 >
                     "Get Started"
-                    <span class="transition-transform group-hover:translate-x-0.5">{icon_arrow_right("size-4")}</span>
+                    <span class="transition-transform group-hover:translate-x-0.5">
+                        {icon_arrow_right("size-4")}
+                    </span>
                 </a>
                 <a
                     href="/dashboard"
@@ -137,10 +137,10 @@ fn TrustItems() -> impl IntoView {
 pub fn Home() -> impl IntoView {
     view! {
         <main class="relative flex-1">
-            <LightBackgroundEffect />
+            // <LightBackgroundEffect />
 
-            <AuraBackground>
-                <section class="relative overflow-hidden border-b border-border bg-linear-to-b from-primary/6 to-transparent">
+            // <AuraBackground>
+            <section class="relative overflow-hidden border-b border-border bg-linear-to-b from-primary/6 to-transparent">
                 <div class="pointer-events-none absolute inset-0 overflow-hidden">
                     <div class="absolute -top-32 left-1/2 h-80 w-2xl -translate-x-1/2 rounded-full bg-primary/10 blur-3xl"></div>
                 </div>
@@ -152,9 +152,7 @@ pub fn Home() -> impl IntoView {
                         "Control every device with "
                         <span class="bg-linear-to-r from-primary via-violet-600 to-amber-500 bg-clip-text text-transparent">
                             "precision and confidence"
-                        </span>
-                        <br />
-                        "— no matter how big the fleet."
+                        </span> <br /> "— no matter how big the fleet."
                     </h1>
 
                     <p class="mx-auto mt-6 max-w-2xl text-base text-muted-foreground md:text-lg">
@@ -169,8 +167,8 @@ pub fn Home() -> impl IntoView {
                     <HeroCards />
                     <TrustItems />
                 </div>
-                </section>
-            </AuraBackground>
+            </section>
+        // </AuraBackground>
         </main>
     }
 }
