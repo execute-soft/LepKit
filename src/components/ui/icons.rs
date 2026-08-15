@@ -257,6 +257,25 @@ pub fn icon_arrow_up_right(class: &'static str) -> impl IntoView {
     }
 }
 
+pub fn icon_arrow_left(class: &'static str) -> impl IntoView {
+    view! {
+        <svg xmlns="http://www.w3.org/2000/svg" class=class viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m12 19-7-7 7-7"></path>
+            <path d="M19 12H5"></path>
+        </svg>
+    }
+}
+
+pub fn icon_alert_circle(class: &'static str) -> impl IntoView {
+    view! {
+        <svg xmlns="http://www.w3.org/2000/svg" class=class viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" x2="12" y1="8" y2="12"></line>
+            <line x1="12" x2="12.01" y1="16" y2="16"></line>
+        </svg>
+    }
+}
+
 pub fn icon_github(class: &'static str) -> impl IntoView {
     view! {
         <svg xmlns="http://www.w3.org/2000/svg" class=class viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
