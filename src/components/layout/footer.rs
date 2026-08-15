@@ -3,16 +3,12 @@ use crate::components::ui::link::NavLink;
 use crate::components::ui::logo::Logo;
 use crate::components::ui::section::Section;
 use crate::config::constants::{
-    ACCOUNT_LINKS, APP_LOCATION, APP_NAME, APP_TAGLINE, DEV_EMAIL, DEV_GITHUB, DEV_NAME,
-    EXPLORE_LINKS, SOCIAL_LINKS,
+    ACCOUNT_LINKS, APP_LOCATION, APP_MAIL, APP_NAME, APP_TAGLINE, EXPLORE_LINKS, SOCIAL_LINKS,
 };
 use leptos::prelude::*;
 
 #[component]
-fn LinkColumn(
-    title: &'static str,
-    links: &'static [(&'static str, &'static str)],
-) -> impl IntoView {
+fn LinkColumn(title: &'static str, links: &'static [(&'static str, &'static str)]) -> impl IntoView {
     view! {
         <div>
             <h3 class="mb-4 text-sm font-semibold text-foreground">{title}</h3>
@@ -86,16 +82,19 @@ pub fn Footer() -> impl IntoView {
                     <div class="space-y-4">
                         <h3 class="text-sm font-semibold text-foreground">"Get in touch"</h3>
                         <a
-                            href=format!("mailto:{DEV_EMAIL}")
+                            href=format!("mailto:{APP_MAIL}")
                             class="flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
                         >
                             {icon_mail("size-4 shrink-0")}
-                            {DEV_EMAIL}
+                            {APP_MAIL}
                         </a>
                         <p class="flex items-center gap-2 text-sm text-muted-foreground">
-                            {icon_map_pin("size-4 shrink-0")} {APP_LOCATION}
+                            {icon_map_pin("size-4 shrink-0")}
+                            {APP_LOCATION}
                         </p>
-                        <p class="text-xs text-muted-foreground">{APP_TAGLINE}</p>
+                        <p class="text-xs text-muted-foreground">
+                            {APP_TAGLINE}
+                        </p>
                     </div>
                 </div>
 
@@ -103,17 +102,6 @@ pub fn Footer() -> impl IntoView {
                     <div class="flex flex-col items-center justify-between gap-3 sm:flex-row">
                         <p class="text-xs text-muted-foreground">
                             "© " {year} " " {APP_NAME} ". All rights reserved."
-                        </p>
-                        <p class="text-xs text-muted-foreground">
-                            "Built by "
-                            <a
-                                href=DEV_GITHUB
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                class="font-medium text-foreground transition-colors hover:text-primary"
-                            >
-                                {DEV_NAME}
-                            </a>
                         </p>
                         <button
                             class="inline-flex cursor-pointer items-center gap-1 text-xs text-muted-foreground transition-colors hover:text-foreground"

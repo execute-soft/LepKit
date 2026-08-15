@@ -1,5 +1,3 @@
-#![allow(dead_code)]
-
 use crate::utils::class::merge_classes;
 use leptos::prelude::*;
 
