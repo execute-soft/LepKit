@@ -1,0 +1,94 @@
+use crate::components::ui::icons::link_icon;
+use crate::config::constants::HEADER_LINKS;
+use leptos::ev;
+use leptos::prelude::*;
+use leptos_router::hooks::{use_location, use_navigate};
+use wasm_bindgen::JsCast;
+
+#[component]
+pub fn MobileNav(
+    is_open: RwSignal<bool>,
+    button_ref: NodeRef<leptos::html::Button>,
+) -> impl IntoView {
+    let nav_ref: NodeRef<leptos::html::Div> = NodeRef::new();
+    let pathname = use_location().pathname;
+    let navigate = use_navigate();
+
+    window_event_listener(ev::mousedown, move |ev| {
+        if !is_open.get_untracked() {
+            return;
+        }
+        let Some(target) = ev.target() else {
+            return;
+        };
+        let target_node = target.dyn_into::<web_sys::Node>().ok();
+        let inside_nav = nav_ref
+            .get()
+            .is_some_and(|el| el.contains(target_node.as_ref()));
+        let inside_button = button_ref
+            .get()
+            .is_some_and(|el| el.contains(target_node.as_ref()));
+        if !inside_nav && !inside_button {
+            is_open.set(false);
+        }
+    });
+
+    view! {
+        {move || {
+            if is_open.get() {
+                view! {
+                    <div class="motion-popup md:hidden absolute top-full right-10 z-50 min-w-40 rounded-md bg-background/80 p-1 shadow-feature-card">
+                        <div node_ref=nav_ref>
+                            <ul class="flex flex-col">
+                                {HEADER_LINKS
+                                    .iter()
+                                    .map(|(href, label, icon_key)| {
+                                        let href = *href;
+                                        let label = *label;
+                                        let icon_key = *icon_key;
+                                        let navigate = navigate.clone();
+                                        let is_active = move || {
+                                            if href == "/" {
+                                                pathname.get() == "/"
+                                            } else {
+                                                pathname.get().starts_with(href)
+                                            }
+                                        };
+                                        view! {
+                                            <li>
+                                                <a
+                                                    href=href
+                                                    on:click=move |ev| {
+                                                        ev.prevent_default();
+                                                        navigate(href, Default::default());
+                                                        is_open.set(false);
+                                                    }
+                                                    class={move || {
+                                                        format!(
+                                                            "relative flex w-full cursor-pointer items-center gap-3 rounded-sm px-2 py-1.5 text-xs transition-colors capitalize sm:gap-4 sm:text-sm {}",
+                                                            if is_active() {
+                                                                "bg-primary/10 text-primary"
+                                                            } else {
+                                                                "text-foreground hover:bg-foreground/30"
+                                                            },
+                                                        )
+                                                    }}
+                                                >
+                                                    {link_icon(icon_key, "size-3.5")}
+                                                    <span>{label}</span>
+                                                </a>
+                                            </li>
+                                        }
+                                    })
+                                    .collect_view()}
+                            </ul>
+                        </div>
+                    </div>
+                }
+                    .into_any()
+            } else {
+                ().into_any()
+            }
+        }}
+    }
+}

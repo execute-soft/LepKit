@@ -1,8 +1,13 @@
 pub mod badge;
 pub mod button;
+pub mod aura_background;
+pub mod decorative_blob;
+pub mod icons;
 pub mod input;
+pub mod logo;
 pub mod modal;
 pub mod pagination;
+pub mod section;
 pub mod select;
 pub mod spinner;
 pub mod table;

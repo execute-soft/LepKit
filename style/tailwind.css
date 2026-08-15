@@ -1,1 +1,291 @@
 @import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
+
+body {
+    background-color: #f6f5f2;
+}
+
+.dark body {
+    background-color: #100e0b;
+}
+
+:root {
+    --background: #ffffff;
+    --foreground: #111827;
+    --card: #ffffff;
+    --card-foreground: #111827;
+    --primary: #14b8a6;
+    --primary-foreground: #ffffff;
+    --muted: #f3f4f6;
+    --muted-foreground: #6b7280;
+    --accent: #f3f4f6;
+    --accent-foreground: #111827;
+    --border: #e5e7eb;
+    --input: #d1d5db;
+    --ring: #14b8a6;
+
+    --blob1: #5EEAD4;
+    --blob2: #14B8A6;
+    --blob3: #0F766E;
+
+    --feature-card: 0 -1px 3px 0 rgb(0 0 0 / 0.05);
+}
+
+.dark {
+    --background: #000000;
+    --foreground: #fcfcfc;
+    --card: #111827;
+    --card-foreground: #fcfcfc;
+    --primary: #5EEAD4;
+    --primary-foreground: #111827;
+    --muted: #1d1e1f;
+    --muted-foreground: #9ca3af;
+    --accent: #1f2937;
+    --accent-foreground: #fcfcfc;
+    --border: #2f2f30;
+    --input: #374151;
+    --ring: #5EEAD4;
+
+    --blob1: #CCFBF1;
+    --blob2: #14B8A6;
+    --blob3: #0F766E;
+
+    --feature-card: 0 0 0 1px rgb(255 255 255 / 0.06), 0 -1px rgb(255 255 255 / 0.1);
+}
+
+@theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --shadow-feature-card: var(--feature-card);
+}
+
+:root[data-theme="blue"] {
+    --primary: #3b82f6;
+    --blob1: #60A5FA;
+    --blob2: #3B82F6;
+    --blob3: #3F64E9;
+}
+
+:root[data-theme="blue"].dark {
+    --primary: #60a5fa;
+    --blob1: #93C5FD;
+    --blob2: #2563EB;
+    --blob3: #3F64E9;
+}
+
+:root[data-theme="violet"] {
+    --primary: #8b5cf6;
+    --blob1: #FFB800;
+    --blob2: #8B5CF6;
+    --blob3: #3F64E9;
+}
+
+:root[data-theme="violet"].dark {
+    --primary: #a78bfa;
+    --blob1: #FFB800;
+    --blob2: #7C3AED;
+    --blob3: #3F64E9;
+}
+
+:root[data-theme="teal"] {
+    --primary: #14b8a6;
+    --blob1: #5EEAD4;
+    --blob2: #14B8A6;
+    --blob3: #0F766E;
+}
+
+:root[data-theme="teal"].dark {
+    --primary: #4acfc0;
+    --blob1: #CCFBF1;
+    --blob2: #14B8A6;
+    --blob3: #0F766E;
+}
+
+:root[data-theme="orange"] {
+    --primary: #f97316;
+    --blob1: #FFB800;
+    --blob2: #FB923C;
+    --blob3: #3F64E9;
+}
+
+:root[data-theme="orange"].dark {
+    --primary: #fdba74;
+    --blob1: #FFB800;
+    --blob2: #F97316;
+    --blob3: #3F64E9;
+}
+
+:root[data-theme="red"] {
+    --primary: #ef4444;
+    --blob1: #FFB800;
+    --blob2: #EF4444;
+    --blob3: #3F64E9;
+}
+
+:root[data-theme="red"].dark {
+    --primary: #fca5a5;
+    --blob1: #FFB800;
+    --blob2: #F87171;
+    --blob3: #3F64E9;
+}
+
+:root[data-theme="yellow"] {
+    --primary: #fbbf24;
+    --blob1: #FFB800;
+    --blob2: #FBBF24;
+    --blob3: #3F64E9;
+}
+
+:root[data-theme="yellow"].dark {
+    --primary: #ffd64d;
+    --blob1: #FFB800;
+    --blob2: #D97706;
+    --blob3: #3F64E9;
+}
+
+:root[data-theme="pink"] {
+    --primary: #fc95a4;
+    --blob1: #FFB800;
+    --blob2: #FC95A4;
+    --blob3: #3F64E9;
+}
+
+:root[data-theme="pink"].dark {
+    --primary: #ffaebb;
+    --blob1: #FFB800;
+    --blob2: #F43F5E;
+    --blob3: #3F64E9;
+}
+
+:root[data-theme="black-white"] {
+    --primary: #000000;
+    --blob1: #FFB800;
+    --blob2: #E93F3F;
+    --blob3: #3F64E9;
+}
+
+:root[data-theme="black-white"].dark {
+    --primary: #fcfcfc;
+    --blob1: #FFB800;
+    --blob2: #E93F3F;
+    --blob3: #3F64E9;
+}
+
+/* Smokeveil - Aura */
+/* Base color lives on body (see body rules at top) - layers blend against it. */
+.aura-bg {
+    position: relative;
+    overflow: hidden;
+    min-height: 100vh;
+    /* NO background-color - blend modes composite against the page behind it */
+}
+
+.aura-layer-1,
+.aura-layer-2,
+.aura-layer-3,
+.aura-grain {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    transform: translateZ(0);
+    will-change: transform;
+}
+
+/* Light surface: blend modes swap to multiply so the gradient doesn't wash out */
+.aura-layer-1 {
+    background: linear-gradient(155deg, transparent 8%, rgba(30, 75, 68, 0.12) 28%, rgba(45, 112, 99, 0.25) 43%, rgba(23, 65, 59, 0.18) 59%, transparent 82%);
+    mix-blend-mode: multiply;
+    filter: blur(175px);
+}
+
+.aura-layer-2 {
+    background: radial-gradient(70% 42% at 45% 50%, rgba(40, 111, 99, 0.25) 0%, rgba(20, 61, 55, 0.12) 48%, transparent 82%);
+    mix-blend-mode: multiply;
+    filter: blur(163px);
+    opacity: 0.9;
+}
+
+.aura-layer-3 {
+    background: linear-gradient(25deg, transparent 25%, rgba(90, 151, 135, 0.07) 50%, transparent 75%);
+    mix-blend-mode: multiply;
+    filter: blur(113px);
+    opacity: 0.8;
+}
+
+/* Dark surface: screen / soft-light as designed */
+.dark .aura-layer-1 {
+    mix-blend-mode: screen;
+    filter: blur(252px);
+}
+
+.dark .aura-layer-2 {
+    mix-blend-mode: screen;
+    filter: blur(234px);
+}
+
+.dark .aura-layer-3 {
+    mix-blend-mode: soft-light;
+    filter: blur(162px);
+}
+
+/* Film-grain overlay */
+.aura-grain {
+    mix-blend-mode: overlay;
+    opacity: 0.85;
+}
+
+@media (min-width: 768px) {
+    .aura-layer-1 {
+        filter: blur(252px);
+    }
+    .aura-layer-2 {
+        filter: blur(234px);
+    }
+    .aura-layer-3 {
+        filter: blur(162px);
+    }
+}
+
+/* Motion entrance (header) */
+@keyframes motion-top {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.motion-top {
+    animation: motion-top 0.5s ease-out 0.2s backwards;
+}
+
+/* Motion popup (mobile nav) */
+@keyframes motion-pop {
+    from {
+        opacity: 0;
+        transform: scale(0.95) translateY(-4px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.motion-popup {
+    animation: motion-pop 0.2s ease-out both;
+}
