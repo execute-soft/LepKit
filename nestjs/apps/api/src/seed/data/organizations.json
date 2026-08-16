@@ -1,0 +1,17 @@
+[
+  {
+    "business_name": "Executesoft",
+    "legal_name": "Executesoft Limited",
+    "site": {
+      "code": "EXE2301",
+      "types": "web"
+    },
+    "admin": {
+      "email": "executesoft.info@gmail.com",
+      "password": "eXecutesoft@123",
+      "firstName": "Executesoft",
+      "lastName": "Admin",
+      "role": "admin"
+    }
+  }
+]
