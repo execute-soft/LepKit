@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "compilerOptions": {
+    "declaration": true,
+    "declarationMap": true,
+    "esModuleInterop": true,
+    "incremental": false,
+    "isolatedModules": true,
+    "jsx": "react-jsx",
+    "lib": ["es2022", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "moduleDetection": "force",
+    "moduleResolution": "Bundler",
+    "noUncheckedIndexedAccess": true,
+    "paths": {
+      "@tanstack/react-table": ["../../node_modules/.bun/node_modules/@tanstack/react-table/src/index.tsx"],
+      "@tanstack/table-core": ["../../node_modules/.bun/node_modules/@tanstack/table-core/src/index.ts"]
+    },
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "target": "ES2022"
+  },
+  "include": ["src"]
+}

@@ -1,0 +1,46 @@
+{
+  "name": "webspace",
+  "private": true,
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "check-types": "turbo run check-types",
+    "deploy:systems": "cd ./apps/systems && bun run deploy",
+    "deploy:hack": "cd ./apps/hack && bun run deploy",
+    "deploy:docs": "cd ./apps/docs && bun run deploy",
+    "deploy:gridlogic": "cd ./apps/gridlogic && bun run deploy",
+    "deploy:me": "cd ./apps/me && bun run deploy",
+    "deploy:controller": "cd ./apps/controller && bun run deploy",
+    "deploy:storexmart": "cd ./apps/storexmart && bun run deploy",
+    "deploy:stockeye": "cd ./apps/stockeye && bun run deploy",
+    "deploy:theme:gimos": "cd ./apps/themes/gimos && bun run deploy",
+    "deploy:theme:zimos": "cd ./apps/themes/zimos && bun run deploy",
+    "deploy:theme:boisodai": "cd ./apps/themes/boisodai && bun run deploy",
+    "deploy:theme:default": "cd ./apps/themes/default && bun run deploy"
+  },
+  "devDependencies": {
+    "prettier": "^3.7.4",
+    "turbo": "^2.8.0",
+    "typescript": "5.9.2"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "packageManager": "bun@1.3.6",
+  "workspaces": [
+    "apps/*",
+    "apps/ecom/*",
+    "apps/ecom/themes/*",
+    "packages/*"
+  ],
+  "dependencies": {
+    "@tanstack/react-table": "^8.21.3",
+    "@tanstack/table-core": "^8.21.3",
+    "@types/node": "^25.2.0"
+  },
+  "overrides": {
+    "yargs": "17.7.1"
+  }
+}
